@@ -18,14 +18,8 @@ public class ClienteResource {
 	private ClienteService service;
 	
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
-	public ResponseEntity<?> find(@PathVariable Integer id) {
-		// PathVariable -> linka id do metodo (parametro) com id do endpoint (value)
-		// ResponseEntity<?> -> encapsula uma resposta http para o tipo rest
-		//    torna generico, ao inves de retornar lista de categorias 
-		
-		Cliente obj = service.buscar(id);
-		
-		// retorna objeto buscado pelo servico
+	public ResponseEntity<Cliente> find(@PathVariable Integer id) {
+		Cliente obj = service.find(id);
 		return ResponseEntity.ok().body(obj);
 	}
 }
