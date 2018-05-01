@@ -24,7 +24,6 @@ public class CategoriaResource {
 	@RequestMapping(value="/{id}", method=RequestMethod.GET)
 	public ResponseEntity<Categoria> find(@PathVariable Integer id) {
 		Categoria obj = service.find(id);
-		// retorna objeto buscado pelo servico
 		return ResponseEntity.ok().body(obj);
 	}
 	
@@ -42,6 +41,13 @@ public class CategoriaResource {
 		obj = service.update(obj);
 		return ResponseEntity.noContent().build();
 	}
+
+	@RequestMapping(value="/{id}", method=RequestMethod.DELETE)
+	public ResponseEntity<Void> delete(@PathVariable Integer id) {
+		service.delete(id);
+		return ResponseEntity.noContent().build();
+	}
+
 }
 
 // PathVariable -> linka id do metodo (parametro) com id do endpoint (value)

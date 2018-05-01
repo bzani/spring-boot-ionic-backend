@@ -31,8 +31,9 @@ import com.udemy.cursomc.repositories.PagamentoRepository;
 import com.udemy.cursomc.repositories.PedidoRepository;
 import com.udemy.cursomc.repositories.ProdutoRepository;
 
-@SpringBootApplication
-public class CursomcApplication implements CommandLineRunner {
+@SpringBootApplication  // same as @Configuration @EnableAutoConfiguration @ComponentScan
+public class CursomcApplication implements CommandLineRunner {  
+		// this interface provides access to application arguments as string array
 
 	@Autowired
 	private CategoriaRepository categoriaRepository;
@@ -59,6 +60,7 @@ public class CursomcApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... args) throws Exception {
+		// (String ...) is an array of parameters of type String, where as String[] is a single parameter
 		
 		/* 
 		 * Categorias e Produtos

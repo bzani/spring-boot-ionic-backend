@@ -10,7 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
 
-@Entity
+@Entity  // gerir objeto como entidade para persistencia na base
 public class Categoria implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
