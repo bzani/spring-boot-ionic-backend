@@ -51,6 +51,9 @@ public class ClienteService {
 	@Value("${img.prefix.client.profile}")
 	private String prefix;
 	
+	@Value("${img.profile.size}")
+	private Integer size;
+	
 	public Cliente find(Integer id) {
 		
 		UserSS user = UserService.authenticated();
@@ -120,20 +123,28 @@ public class ClienteService {
 		newObj.setEmail(obj.getEmail());
 	}
 	
-	/*
-	 * 1. Verificar se usuario esta logado
-	 * 2. Capturar arquivo da requisicao
-	 * 3. Padronizar nome do arquivo de acordo com cliente
-	 * 4. Salvar imagem no cliente
-	 */
 	public URI uploadProfilePicture(MultipartFile multipartFile) {
+		/*
+		 * Verificar se usuario esta logado
+		 */
 		UserSS user = UserService.authenticated();
 		if (user == null) {
 			throw new AuthorizationException("Acesso negado");
 		}
-		
+		/*
+		 * Capturar arquivo da requisicao e tratar (crop/resize)
+		 */
 		BufferedImage jpgImage = imageService.getJpgImageFromFile(multipartFile);
+		jpgImage = imageService.cropSquare(jpgImage);
+		jpgImage = imageService.resize(jpgImage, size);
+		
+		/*
+		 * Padronizar nome do arquivo de acordo com cod. cliente
+		 */
 		String fileName = prefix + user.getId() + ".jpg";
+		/*
+		 * Salvar imagem em Cliente
+		 */
 		return s3Service.uploadFile(imageService.getInputStream(jpgImage, "jpg"), fileName, "image");
 	}
 }
